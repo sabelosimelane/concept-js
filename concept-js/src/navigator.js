@@ -1,6 +1,12 @@
+var context;
+var root;
+
 function Navigator(){
-	this.ctx = "/Orchestra/";
-	this.url = "/Orchestra/Controller";
+	if (!context || !root)
+		alert('You need to set the root="/Application/" and context="/Application/Controller". Set this in the js global scope!');
+	
+	this.ctx = root;
+	this.url = context;
 	this.LANDING_PAGE = 'index.jsp';
 }
 

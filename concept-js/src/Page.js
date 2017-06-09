@@ -194,9 +194,10 @@ Page.prototype.dropdown = function(element){
 
 	 var config = {
              allow_single_deselect:true,
-             disable_search_threshold:10,
+             //disable_search_threshold:10,
              no_results_text:'Oops, nothing found!',
-             width: '100%'
+             width: '80%',
+             search_contains: true
          }
         
        $(element).find('.chosen-select').chosen(config);
