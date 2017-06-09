@@ -138,11 +138,11 @@ Page.prototype.load = function(navParam, parms, callback){
 	});
 };
 
-Page.prototype.init = function(element){
-	this.initialize(element);
+Page.prototype.init = function(element, props){
+	this.initialize(element, props);
 }
 
-Page.prototype.initialize = function(element){
+Page.prototype.initialize = function(element, props){
 	if (!element){
 		element = $("body");
 	}
@@ -166,7 +166,7 @@ Page.prototype.initialize = function(element){
     });
 	
 	this.checkbox(element);
-	this.dropdown(element);
+	this.dropdown(element, props);
 	this.jsswitch(element);
 	
 	$(element).find('input[type=checkbox]').each(function(){
@@ -187,16 +187,22 @@ Page.prototype.jsswitch = function(element){
 	
 };
 
-Page.prototype.dropdown = function(element){
+Page.prototype.dropdown = function(element, props){
 	if (!element){
 		element = $("body");
 	}
 
+	var width = 100;
+	
+	try {
+		width = props.dropdown.width;
+	} catch (err){}
+	
 	 var config = {
              allow_single_deselect:true,
              //disable_search_threshold:10,
              no_results_text:'Oops, nothing found!',
-             width: '80%',
+             width: width+ '%',
              search_contains: true
          }
         
