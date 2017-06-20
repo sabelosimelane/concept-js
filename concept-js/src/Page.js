@@ -138,11 +138,11 @@ Page.prototype.load = function(navParam, parms, callback){
 	});
 };
 
-Page.prototype.init = function(element, props){
-	this.initialize(element, props);
+Page.prototype.init = function(element){
+	this.initialize(element);
 }
 
-Page.prototype.initialize = function(element, props){
+Page.prototype.initialize = function(element){
 	if (!element){
 		element = $("body");
 	}
@@ -166,7 +166,7 @@ Page.prototype.initialize = function(element, props){
     });
 	
 	this.checkbox(element);
-	this.dropdown(element, props);
+	this.dropdown(element);
 	this.jsswitch(element);
 	
 	$(element).find('input[type=checkbox]').each(function(){
@@ -187,27 +187,33 @@ Page.prototype.jsswitch = function(element){
 	
 };
 
-Page.prototype.dropdown = function(element, props){
+/** DROPDOWN ***/
+Page.prototype.dropdown = function(element){
 	if (!element){
 		element = $("body");
 	}
 
-	var width = 100;
-	
-	try {
-		width = props.dropdown.width;
-	} catch (err){}
-	
 	 var config = {
              allow_single_deselect:true,
              //disable_search_threshold:10,
              no_results_text:'Oops, nothing found!',
-             width: width+ '%',
+             width: '80%',
              search_contains: true
          }
         
        $(element).find('.chosen-select').chosen(config);
 }
+
+Page.prototype.addoption = function(element, value, description){
+	$(element).append('<option value="'+ value +'">'+ description +'</option>');
+	$(element).trigger("chosen:updated");
+}
+
+Page.prototype.setval = function(element, value){
+	$(element).val(value).trigger("chosen:updated");
+}
+
+/*** END DROPDOWN ****/
 
 Page.prototype.checkbox = function(element){
 	if (!element){
