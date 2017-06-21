@@ -30,7 +30,7 @@ Navigator.prototype.call = function(url, json, successCB, errorCB){
 		payload.nav = url;
 		json = JSON.stringify(payload);
 	}
-
+	
 	new Navigator().callAjax(this.url, json, successCB, errorCB);
 	
 };

@@ -35,12 +35,16 @@ Message.prototype.handleError = function(response) {
 };
 
 Message.prototype.displayFieldError = function(error) {
-	var field = $(".error[for='"+ error.fieldId +"']");
-	
-	if (field){
-		$(field).removeClass('hide');
-		$(field).parent().find('.form-control').addClass('error');
+	if (!error || !error.fieldId || !error.fieldDisplayName) {
+		console.error('I cannot display the error for the field!');
+		return;
 	}
+	
+	var validator = $("#"+ error.fieldId).closest('form').validate();
+	var errors = {};
+	errors[error.fieldDisplayName] = error.message;
+	
+	validator.showErrors(errors); 
 };
 
 

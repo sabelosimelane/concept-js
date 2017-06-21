@@ -49,6 +49,12 @@ Util.prototype.parseJSON = function(string){
 	   });
 	   
 	   var a = this.serializeArray();
+	   var disabled = $(this).find('input:disabled');
+	   
+	   disabled.each(function(){
+		   a.push($(this)[0]);
+	   });
+	   
 	   $.each(a, function() {
 
 		   if (o[this.name]) {
@@ -59,9 +65,9 @@ Util.prototype.parseJSON = function(string){
 	       } else if(arrayElements[this.name]){
 	    	   console.log('calling push...');
 	    	   o[this.name] = [];
-	    	   o[this.name].push(this.value || '');
+	    	   o[this.name].push(this.value.trim() || '');
 	       } else {
-	           o[this.name] = this.value || '';
+	           o[this.name] = this.value.trim() || '';
 	       }
 	   });
 	   return o;
