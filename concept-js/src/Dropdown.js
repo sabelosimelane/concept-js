@@ -1,8 +1,14 @@
+/**** Extends Chosen Plugin Dropbox  ******/
+
 jQuery.fn.extend({
-	addoption : function(value, description){
+	dropdown: function(){
+		
+	},
+	
+	addoption : function(value, description, update){
 		var instance = this;
 		$(instance).append('<option value="'+ value +'">'+ description +'</option>');
-		$(instance).trigger("chosen:updated");
+		if (update) $(instance).trigger("chosen:updated");
 		return instance;
 	},
 	
@@ -12,3 +18,13 @@ jQuery.fn.extend({
 		return instance;
 	}
 });
+
+
+(function ( $ ) {
+	 
+    $.fn.greenify = function() {
+        this.css( "color", "green" );
+        return this;
+    };
+ 
+}( jQuery ));
