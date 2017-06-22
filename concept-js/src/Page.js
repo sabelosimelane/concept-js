@@ -138,11 +138,14 @@ Page.prototype.load = function(navParam, parms, callback){
 	});
 };
 
-Page.prototype.init = function(element){
-	this.initialize(element);
+Page.prototype.init = function(element, config){
+	if (config)
+		this.initialize(element, config);
+	else
+		this.initialize(element);
 }
 
-Page.prototype.initialize = function(element){
+Page.prototype.initialize = function(element, config){
 	if (!element){
 		element = $("body");
 	}
@@ -166,7 +169,7 @@ Page.prototype.initialize = function(element){
     });
 	
 	this.checkbox(element);
-	this.dropdown(element);
+	this.dropdown(element, config);
 	this.jsswitch(element);
 	
 	$(element).find('input[type=checkbox]').each(function(){
@@ -188,20 +191,30 @@ Page.prototype.jsswitch = function(element){
 };
 
 /** DROPDOWN ***/
-Page.prototype.dropdown = function(element){
+Page.prototype.dropdown = function(element, config){
 	if (!element){
 		element = $("body");
 	}
 
-	 var config = {
+	if (!config){
+		config = {
              allow_single_deselect:true,
              //disable_search_threshold:10,
              no_results_text:'Oops, nothing found!',
              width: '80%',
              search_contains: true
          }
-        
-       $(element).find('.chosen-select').chosen(config);
+	} else {
+		config = {
+	             allow_single_deselect: config.dropdown.allow_single_deselect,
+	             disable_search_threshold: config.dropdown.disable_search_threshold,
+	             no_results_text: config.dropdown.no_results_text = 'No results.',
+	             width: config.dropdown.width,
+	             search_contains: config.dropdown.search_contains
+	         }
+	}
+     
+	$(element).find('.chosen-select').chosen(config);
 }
 
 Page.prototype.addoption = function(element, value, description){

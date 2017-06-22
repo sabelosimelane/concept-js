@@ -1,9 +1,6 @@
 /**** Extends Chosen Plugin Dropbox  ******/
 
 jQuery.fn.extend({
-	dropdown: function(){
-		
-	},
 	
 	addoption : function(value, description, update){
 		var instance = this;
