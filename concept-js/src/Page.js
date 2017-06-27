@@ -210,8 +210,10 @@ Page.prototype.dropdown = function(element, config){
 	             disable_search_threshold: config.dropdown.disable_search_threshold,
 	             no_results_text: config.dropdown.no_results_text = 'No results.',
 	             width: config.dropdown.width,
-	             search_contains: config.dropdown.search_contains
-	         }
+	             search_contains: config.dropdown.search_contains,
+	             include_group_label_in_selected: config.dropdown.include_group_label_in_selected,
+	             placeholder_text_single: config.dropdown.placeholder_text_single
+	         };
 	}
      
 	$(element).find('.chosen-select').chosen(config);
