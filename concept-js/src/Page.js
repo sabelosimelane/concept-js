@@ -174,8 +174,8 @@ Page.prototype.datepicker = function(element, config){
 		element = $("body");
 	}
 	
-	if (config){
-		$(element).find('.input-group.date').datetimepicker(config.datepicker);
+	if (config && config.datepicker){
+		$(element).find('.input-group.date').datepicker(config.datepicker);
 	} else {
 		
 		$(element).find('.input-group.date').datepicker({
