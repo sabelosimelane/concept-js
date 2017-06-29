@@ -154,15 +154,6 @@ Page.prototype.initialize = function(element, config){
 		search.unbind();
 	}
 	
-	$(element).find('.input-group.date').datepicker({
-        todayBtn: "linked",
-        keyboardNavigation: false,
-        forceParse: false,
-        calendarWeeks: true,
-        autoclose: true,
-        format: 'dd/mm/yyyy'
-    });
-	
 	$(element).find('.i-checks').iCheck({
         checkboxClass: 'icheckbox_square-green',
         radioClass: 'iradio_square-green',
@@ -171,10 +162,31 @@ Page.prototype.initialize = function(element, config){
 	this.checkbox(element);
 	this.dropdown(element, config);
 	this.jsswitch(element);
+	this.datepicker(element, config);
 	
 	$(element).find('input[type=checkbox]').each(function(){
 		$(this).val(true);
 	});
+}
+
+Page.prototype.datepicker = function(element, config){
+	if (!element){
+		element = $("body");
+	}
+	
+	if (config){
+		$(element).find('.input-group.date').datetimepicker(config.datepicker);
+	} else {
+		
+		$(element).find('.input-group.date').datepicker({
+	        todayBtn: "linked",
+	        keyboardNavigation: false,
+	        forceParse: false,
+	        calendarWeeks: true,
+	        autoclose: true,
+	        format: 'YYYY-MM-DD HH:mm'
+	    });
+	}
 }
 
 Page.prototype.jsswitch = function(element){
@@ -205,18 +217,16 @@ Page.prototype.dropdown = function(element, config){
              search_contains: true
          }
 	} else {
-		config = {
-	             allow_single_deselect: config.dropdown.allow_single_deselect,
-	             disable_search_threshold: config.dropdown.disable_search_threshold,
-	             no_results_text: config.dropdown.no_results_text = 'No results.',
-	             width: config.dropdown.width,
-	             search_contains: config.dropdown.search_contains,
-	             include_group_label_in_selected: config.dropdown.include_group_label_in_selected,
-	             placeholder_text_single: config.dropdown.placeholder_text_single
-	         };
+		config = config.dropdown;
 	}
      
-	$(element).find('.chosen-select').chosen(config);
+	$(element).find('.chosen-select').each(function(){
+		
+		if ($(this).attr('value')){
+			$(this).val('Small');
+		}
+		$(this).chosen(config);
+	});
 }
 
 Page.prototype.addoption = function(element, value, description){
