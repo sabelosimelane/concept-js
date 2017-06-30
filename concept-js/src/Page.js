@@ -174,8 +174,8 @@ Page.prototype.datepicker = function(element, config){
 		element = $("body");
 	}
 	
-	if (config && config.datepicker){
-		$(element).find('.input-group.date').datepicker(config.datepicker);
+	if (config){
+		$(element).find('.input-group.date').datetimepicker(config.datepicker);
 	} else {
 		
 		$(element).find('.input-group.date').datepicker({
@@ -223,7 +223,7 @@ Page.prototype.dropdown = function(element, config){
 	$(element).find('.chosen-select').each(function(){
 		
 		if ($(this).attr('value')){
-			$(this).val('Small');
+			$(this).val($(this).attr('value'));
 		}
 		$(this).chosen(config);
 	});

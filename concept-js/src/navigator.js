@@ -1,6 +1,13 @@
 var context;
 var root;
 
+/** You need to set the app's root in your main.jsp like below. 
+  
+ var app = new App({root: '/TeamConsole/', context: '/TeamConsole/Controller'});
+ app.init()
+ 
+ **/
+
 function Navigator(){
 	if (!context || !root)
 		alert('You need to set the root="/Application/" and context="/Application/Controller". Set this in the js global scope!');
