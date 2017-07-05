@@ -16,7 +16,7 @@
     };
     
     
-    $.fn.trigger = function(action, param) {
+   /* $.fn.trigger = function(action, param) {
         
 		if ( action === "showpopup") {
 
@@ -27,7 +27,7 @@
         }
         
         return this;
-    };
+    };*/
     
     $.fn.formtojson = function(form) {
     	var instance = this;
