@@ -29,6 +29,15 @@ Navigator.prototype.loadJSP = function(path, callback){
 Navigator.prototype.call = function(url, json, successCB, errorCB){
 	new Message().clearErrors();
 	
+	var headers = null;
+	if (json && json.headers){
+		headers = Object.assign({}, json.headers);
+		json.headers = undefined;
+		//returnType : 'JSP',
+		// redirect: 'EditTripCrew.jsp',
+	}
+	
+	
 	if (json && url){
 		json.nav = url;
 		json = JSON.stringify(json);
@@ -38,8 +47,7 @@ Navigator.prototype.call = function(url, json, successCB, errorCB){
 		json = JSON.stringify(payload);
 	}
 	
-	new Navigator().callAjax(this.url, json, successCB, errorCB);
-	
+	new Navigator().callAjax(this.url, json, successCB, errorCB, headers);
 };
 
 Navigator.prototype.submit = function(action, form, exParms, successCB, errorCB){
@@ -59,19 +67,22 @@ Navigator.prototype.submit = function(action, form, exParms, successCB, errorCB)
 	new Navigator().callAjax(this.url, json, successCB, errorCB);
 };
 
-Navigator.prototype.callAjax = function(url, json, successCB, errorCB){
+Navigator.prototype.callAjax = function(url, json, successCB, errorCB, headers){
+	var options = {
+			   url: this.url,
+			   type: "POST",
+			   contentType: "application/json",
+			   data: json
+			};
 	
-	$.ajax({
-		   url: this.url,
-		   type: "POST",
-		   contentType: "application/json",
-		   data: json
-		}).done(function(data, textStatus, jqXHR){
+	if (headers){
+		options.headers = headers; 
+	}
+	
+	$.ajax(options).done(function(data, textStatus, jqXHR){
 			if (!$.isPlainObject( data)){
-				console.log('passing html...');
 				data = $.parseHTML(data, true);
 			} else {
-				console.log('object not plain object...');
 				data = data.data;
 			}
 			if (typeof(successCB) == "function") successCB(data);
