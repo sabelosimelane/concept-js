@@ -44,13 +44,15 @@
  	               o[this.name] = [o[this.name]];
  	           }
  	           o[this.name].push(this.value || '');
- 	       } else {
+ 	       } else if (this.value.trim()) {
  	           o[this.name] = this.value.trim() || '';
  	       }
  	   });
     	
     	$(instance).find('select[name]').each(function(){
-  	           o[$(this).attr('name')] = $(this).val();
+    		if (this.value.trim()){
+    			o[$(this).attr('name')] = $(this).val();
+    		}
   	   });
 	        
         return o;
