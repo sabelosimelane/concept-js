@@ -138,11 +138,8 @@ Page.prototype.load = function(navParam, parms, callback){
 	});
 };
 
-Page.prototype.init = function(element, config){
-	if (config)
-		this.initialize(element, config);
-	else
-		this.initialize(element);
+Page.prototype.init = function(config){
+	this.initialize($("body"), config);
 }
 
 Page.prototype.initialize = function(element, config){
@@ -150,18 +147,13 @@ Page.prototype.initialize = function(element, config){
 		element = $("body");
 	}
 	
-	if (search != null){
+	if (search){
 		search.unbind();
 	}
 	
-	$(element).find('.i-checks').iCheck({
-        checkboxClass: 'icheckbox_square-green',
-        radioClass: 'iradio_square-green',
-    });
-	
 	this.checkbox(element);
 	this.dropdown(element, config);
-	this.jsswitch(element);
+	this.jsswitch(element, config);
 	this.datepicker(element, config);
 	
 	$(element).find('input[type=checkbox]').each(function(){
@@ -174,11 +166,11 @@ Page.prototype.datepicker = function(element, config){
 		element = $("body");
 	}
 	
-	if (config){
+	if (config && config.datepicker){
 		$(element).find('.input-group.date').datetimepicker(config.datepicker);
 	} else {
 		
-		$(element).find('.input-group.date').datepicker({
+		$(element).find('.input-group.date').datetimepicker({
 	        todayBtn: "linked",
 	        keyboardNavigation: false,
 	        forceParse: false,
@@ -189,15 +181,15 @@ Page.prototype.datepicker = function(element, config){
 	}
 }
 
-Page.prototype.jsswitch = function(element){
+Page.prototype.jsswitch = function(element, config){
 	if (!element){
 		element = $("body");
 	}
-	
+	var configuration = { color: '#1AB394' };
 	
 	var elem = document.querySelector('.js-switch');
 	$(element).find('.js-switch').each(function(){
-		new Switchery($(this)[0], { color: '#1AB394' });
+		new Switchery($(this)[0], configuration);
 	});
 	
 };
@@ -208,24 +200,24 @@ Page.prototype.dropdown = function(element, config){
 		element = $("body");
 	}
 
-	if (!config){
-		config = {
-             allow_single_deselect:true,
-             //disable_search_threshold:10,
-             no_results_text:'Oops, nothing found!',
-             width: '80%',
-             search_contains: true
-         }
-	} else {
-		config = config.dropdown;
-	}
+	configuration = {
+            allow_single_deselect:true,
+            //disable_search_threshold:10,
+            no_results_text:'Oops, nothing found!',
+            width: '80%',
+            search_contains: true
+        };
+	
+	if (config && config.dropdown){
+		configuration.width = config.dropdown.width || '80%';
+	} 
      
 	$(element).find('.chosen-select').each(function(){
 		
 		if ($(this).attr('value')){
 			$(this).val($(this).attr('value'));
 		}
-		$(this).chosen(config);
+		$(this).chosen(configuration);
 	});
 }
 

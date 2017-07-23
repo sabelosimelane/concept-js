@@ -47,7 +47,7 @@ Navigator.prototype.call = function(url, json, successCB, errorCB){
 		json = JSON.stringify(payload);
 	}
 	
-	new Navigator().callAjax(this.url, json, successCB, errorCB, headers);
+	this.callAjax(this.url, json, successCB, errorCB, headers);
 };
 
 Navigator.prototype.submit = function(action, form, exParms, successCB, errorCB){
@@ -64,7 +64,7 @@ Navigator.prototype.submit = function(action, form, exParms, successCB, errorCB)
 	var json = JSON.stringify(parms);
 	
 	//delete (parms.nav);
-	new Navigator().callAjax(this.url, json, successCB, errorCB);
+	this.callAjax(this.url, json, successCB, errorCB);
 };
 
 Navigator.prototype.callAjax = function(url, json, successCB, errorCB, headers){
