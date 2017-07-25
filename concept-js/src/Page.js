@@ -166,26 +166,32 @@ Page.prototype.datepicker = function(element, config){
 		element = $("body");
 	}
 	
-	if (config && config.datepicker){
-		$(element).find('.input-group.date').datetimepicker(config.datepicker);
-	} else {
+	if (config && config.datetimepicker) config = config.datetimepicker;
+	if (!config) config = {};
+	
+	var configuration = {
+			inline: config.inline || false,
+			keepOpen: config.keepOpen || false,
+	        format: config.format || 'YYYY-MM-DD HH:mm',
+	        sideBySide: config.sideBySide || true,
+	        stepping: 15,
+	        minDate: config.minDate || false,
+	        maxDate: config.maxDate || false,
+	        showTodayButton: config.showTodayButton || true
+	    };
 		
-		$(element).find('.input-group.date').datetimepicker({
-	        todayBtn: "linked",
-	        keyboardNavigation: false,
-	        forceParse: false,
-	        calendarWeeks: true,
-	        autoclose: true,
-	        format: 'YYYY-MM-DD HH:mm'
-	    });
-	}
+	$(element).find('.input-group.date').datetimepicker(configuration);	
 }
 
 Page.prototype.jsswitch = function(element, config){
 	if (!element){
 		element = $("body");
 	}
-	var configuration = { color: '#1AB394' };
+	
+	if (config && config.toggle) config = config.toggle;
+	if (!config) config = {};
+		
+	var configuration = { color: config.color || '#1AB394' };
 	
 	var elem = document.querySelector('.js-switch');
 	$(element).find('.js-switch').each(function(){
@@ -200,18 +206,17 @@ Page.prototype.dropdown = function(element, config){
 		element = $("body");
 	}
 
+	if (config && config.dropdown) config = config.dropdown;
+	if (!config) config = {};
+		
 	configuration = {
-            allow_single_deselect:true,
+            allow_single_deselect: config.allow_single_deselect || true,
             //disable_search_threshold:10,
-            no_results_text:'Oops, nothing found!',
-            width: '80%',
-            search_contains: true
+            no_results_text: config.no_results_text || 'Oops, nothing found!',
+            width: config.width || '100%',
+            search_contains: config.search_contains || true
         };
-	
-	if (config && config.dropdown){
-		configuration.width = config.dropdown.width || '80%';
-	} 
-     
+
 	$(element).find('.chosen-select').each(function(){
 		
 		if ($(this).attr('value')){
