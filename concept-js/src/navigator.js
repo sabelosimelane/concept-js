@@ -51,7 +51,7 @@ Navigator.prototype.call = function(url, json, successCB, errorCB){
 };
 
 Navigator.prototype.submit = function(action, form, exParms, successCB, errorCB){
-	if ($(form).find("#nav").size() == 0){
+	if ($(form).find("#nav")){
 		$(form).append('<input id="nav" name="nav" type="hidden" value="'+ action +'">');
 	}
 	$(form).find("#action").val(action);

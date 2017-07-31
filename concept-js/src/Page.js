@@ -172,8 +172,8 @@ Page.prototype.datepicker = function(element, config){
 	var configuration = {
 			inline: config.inline || false,
 			keepOpen: config.keepOpen || false,
-	        format: config.format || 'YYYY-MM-DD HH:mm',
-	        sideBySide: config.sideBySide || true,
+	        format: config.format || 'YYYY-MM-DD',
+	        sideBySide: config.sideBySide || false,
 	        stepping: 15,
 	        minDate: config.minDate || false,
 	        maxDate: config.maxDate || false,
