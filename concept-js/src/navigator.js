@@ -58,13 +58,20 @@ Navigator.prototype.submit = function(action, form, exParms, successCB, errorCB)
 	
 	var parms =  $( form ).serializeFormJSON();
 	if (exParms){
+		
+		var headers = null;
+		if (exParms.headers){
+			headers = Object.assign({}, exParms.headers);
+			exParms.headers = undefined;
+			exParms.nav = undefined;
+		}
+		
 		$.extend(parms, exParms);
 	}
 
 	var json = JSON.stringify(parms);
-	
-	//delete (parms.nav);
-	this.callAjax(this.url, json, successCB, errorCB);
+
+	this.callAjax(this.url, json, successCB, errorCB, headers);
 };
 
 Navigator.prototype.callAjax = function(url, json, successCB, errorCB, headers){
@@ -87,11 +94,11 @@ Navigator.prototype.callAjax = function(url, json, successCB, errorCB, headers){
 			}
 			if (typeof(successCB) == "function") successCB(data);
 		}).fail(function(jqXHR, textStatus, errorThrown){
+			console.log(jqXHR.responseText);
 			if (jqXHR.responseText.indexOf("Unauthorized (401)") !== -1) {
 				window.location = new Navigator().ctx; 
 			} else {
 				var response = $.parseJSON(jqXHR.responseText);
-				var message = new Message();
 				message.handleError(response);
 				if (typeof(errorCB) == "function") errorCB(response);
 			}

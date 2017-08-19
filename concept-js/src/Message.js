@@ -1,19 +1,25 @@
-function Message() {
-	this.messageHideInterval = 3500;
+function Message(messageHideInterval, positionClass) {
+	this.messageHideInterval = messageHideInterval || 5000;
+	this.positionClass = positionClass || 'toast-top-right';
 }
 
-Message.prototype.showMessage = function(msg, type) {
+Message.prototype.showMessage = function(msg, config) {
 	var errorTimeout = this.messageHideInterval;
+	var positionClass = this.positionClass;
+	
+	if (!config) config = {};
+	
 	setTimeout(function() {
 		toastr.options = {
-			closeButton : true,
-			progressBar : true,
-			showMethod : 'slideDown',
-			timeOut : errorTimeout
+			closeButton : config.closeButton || true,
+			progressBar : config.progressBar || true,
+			showMethod : config.showMethod || 'slideDown',
+			timeOut : config.timeOut || errorTimeout,
+			positionClass: config.positionClass || positionClass 
 		};
 
-		if (type == 'error') {
-			toastr.error(msg, 'Notification');
+		if (config.type == 'error') {
+			toastr.error(msg, 'Error');
 		} else {
 			toastr.success(msg, 'Notification');
 		}
@@ -21,16 +27,15 @@ Message.prototype.showMessage = function(msg, type) {
 	}, 0);
 };
 
-Message.prototype.show = function(msg, type) {
-	this.showMessage(msg, type);
+Message.prototype.show = function(msg, config) {
+	this.showMessage(msg, config);
 }
 
 Message.prototype.handleError = function(response) {
-	new Message().showMessage(response.message, 'error');
+	this.showMessage(response.message, {type: 'error'});
 	
-	var message = new Message();
 	$(response.data).each(function(){
-		message.displayFieldError(this);
+		Message.prototype.displayFieldError(this);
 	});
 };
 

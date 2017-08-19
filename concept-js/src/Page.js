@@ -11,12 +11,21 @@ Page.prototype.confirm = function(succesCB, props){
 	
 	nav.loadJSP('includes/confirm.jsp', function(resp){
 		page.showModal(resp, function(){
+			
 			if (props && props.title){
 				$("#confirmDlg .title").html(props.title);
 			}
 			
 			if (props && props.message){
 				$("#confirmDlg .confirmMsg").html(props.message);
+			}
+			
+			if (props && props.icon){
+				$("#confirmDlg #confirmIcon").removeClass('fa-warning').addClass(props.icon);
+			}
+			
+			if (props && props.color){
+				$("#confirmDlg #confirmIcon").removeClass('text-warning').addClass(props.color);
 			}
 			
 			$("#confirmDlg #saveBtn").click(function(){
@@ -115,6 +124,7 @@ Page.prototype.showModal2 = function(content, callback, props){
 
 Page.prototype.hideModal = function(callback){
 	$("#theModal").modal('hide');
+	$("#theModal2").modal('hide');
 	if (typeof(callback) == "function") {
 		callback();
 	}
@@ -191,13 +201,13 @@ Page.prototype.jsswitch = function(element, config){
 	if (config && config.toggle) config = config.toggle;
 	if (!config) config = {};
 		
-	var configuration = { color: config.color || '#1AB394' };
+	var configuration = { color: config.color || '#1AB394', disabled: !config.disabled};
 	
 	var elem = document.querySelector('.js-switch');
 	$(element).find('.js-switch').each(function(){
 		new Switchery($(this)[0], configuration);
 	});
-	
+
 };
 
 /** DROPDOWN ***/
