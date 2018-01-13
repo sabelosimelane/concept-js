@@ -157,10 +157,6 @@ Page.prototype.initialize = function(element, config){
 		element = $("body");
 	}
 	
-	if (search){
-		search.unbind();
-	}
-	
 	this.checkbox(element);
 	this.dropdown(element, config);
 	this.jsswitch(element, config);
