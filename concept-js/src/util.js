@@ -1,6 +1,30 @@
 function Util() {
 }
 
+Util.prototype.repeat =  function(element, collection, spacer){
+	
+	$(element).siblings().not(':first').remove();
+	
+	$(collection).each(function(){
+		var elem = $(this)[0];
+		var clone = $(element).clone();
+		$(clone).find('.value').each(function(){
+			var div = $(this);
+			var key = $(this).attr('key');
+			$(clone).find('.value').html(elem[key]);
+			$(clone).removeAttr('id');
+			$(clone).fadeIn('normal');
+		});
+		
+		$(clone).insertAfter(element);
+		
+		if (spacer){
+			$(spacer).insertAfter($(clone));
+		}
+	});
+
+}
+
 Util.prototype.enter = function (event, callback) {
     if (event.which == 13 || event.keyCode == 13) {
     	if (typeof(callback) == "function") {
